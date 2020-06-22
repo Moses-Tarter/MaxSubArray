@@ -1,0 +1,37 @@
+package SAS;
+
+import java.util.ArrayList;
+import java.util.concurrent.ConcurrentSkipListSet;
+
+public class SubArraySum {
+	
+	private ConcurrentSkipListSet<Integer> subSumsSet;
+	
+	public SubArraySum() {
+		subSumsSet = new ConcurrentSkipListSet<>();
+		subSumsSet.add(0);
+	}
+	
+	public int getMaxSubSum(ArrayList<Integer> arrayToSearch) {
+		
+		for(Integer i : arrayToSearch) {
+			subSumsSet.add(i);
+			iterateSetAndUpdate(i);
+		}
+		return getMaxValue();
+	}
+	
+	private void iterateSetAndUpdate(int addToEach) {
+		if(subSumsSet.size() > 1)
+			subSumsSet.forEach((v) -> subSumsSet.add(v+addToEach));
+	}
+	
+	private int getMaxValue() {
+		int max = 0;
+		for(Integer i : subSumsSet) {
+			if(i > max)
+				max = i;
+		}
+		return max;
+	}
+}

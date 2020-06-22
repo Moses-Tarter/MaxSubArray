@@ -1,0 +1,39 @@
+package SAS;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+
+public class SubArraySum {
+	
+	private HashSet<Integer> subSumsSet;
+	
+	public SubArraySum() {
+		subSumsSet = new HashSet<Integer>();
+		subSumsSet.add(0);
+	}
+	
+	public int getMaxSubSum(ArrayList<Integer> arrayToSearch) {
+		
+		for(Integer i : arrayToSearch) {
+			subSumsSet.add(i);
+			iterateSetAndUpdate(i);
+		}
+		return getMaxValue();
+	}
+	
+	private void iterateSetAndUpdate(int addToEach) {
+		if(subSumsSet.size() > 1) {
+			for(Integer i : subSumsSet)
+				subSumsSet.add(i+addToEach);
+		}
+	}
+	
+	private int getMaxValue() {
+		int max = 0;
+		for(Integer i : subSumsSet) {
+			if(i > max)
+				max = i;
+		}
+		return max;
+	}
+}
